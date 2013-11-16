@@ -59,6 +59,7 @@ def FindLaser(image, RedThreshold,GreenThreshold, BlueThreshold):
     return AvgMax
 
 def get_laser_pos():
+    start=time.time()
 
     res=[]
     xvalues=[]
@@ -72,22 +73,41 @@ def get_laser_pos():
     cap.set(12, 3)
 
     #cam=Camera(1)
-
+    print "init time= ", time.time()-start
     #Timer=time.clock()
-    while len(res)!=10:
+    while len(res)!=2:
+        time1=time.time()
+
         # img=cam.getImage()
         ret, img = cap.read()
         # cv2.imshow("input", img)
         #cv2.imshow("thresholded", imgray*thresh2)
 
-        key = cv2.waitKey(10)
+        time2=time.time()
+        elapsed1=time2-time1
+        print "elapsed1= ", elapsed1
+
+        #key = cv2.waitKey(5)
 
         simplecvimg=Image(img, cv2image=True)
 
+        time3=time.time()
+        elapsed2=time3-time2
+        print "elapsed2= ", elapsed2
+
         #image=simplecvimg.crop(320-150, 160-75, 300, 150)
 
+        # time2=time.time()
+        # elapsed1=time2-time1
+        # print "elapsed1= ", elapsed1
+        
         Max=FindLaser(simplecvimg,220, 200, 200)
         #print Max
+
+        # time3=time.time()
+        # elapsed2=time3-time2
+        # print "elapsed2= ",elapsed2
+
         x_value, y_value=Max
 
         if x_value != 0 and y_value != 0:
@@ -104,10 +124,48 @@ def get_laser_pos():
 
     aver_point=(aver_x, aver_y)
 
+    # elapsed3=time.time()-time2
+    # print elapsed3
 
     return aver_point
 
-if __name__ == '__main__':
-    test=get_laser_pos()
+def cont_get_laser_pos():
 
+    res=[]
+    xvalues=[]
+    yvalues=[]
+
+    cap = cv2.VideoCapture(1)
+    #set the width and height, and UNSUCCESSFULLY set the exposure time
+    cap.set(3,640)
+    cap.set(4,320)
+    cap.set(10, 0.4)
+    cap.set(12, 3)
+
+    #cam=Camera(1)
+
+    #Timer=time.clock()
+    while True:
+        # img=cam.getImage()
+        ret, img = cap.read()
+        # cv2.imshow("input", img)
+        #cv2.imshow("thresholded", imgray*thresh2)
+
+        key = cv2.waitKey(5)
+
+        simplecvimg=Image(img, cv2image=True)
+
+        #image=simplecvimg.crop(320-150, 160-75, 300, 150)
+
+        Max=FindLaser(simplecvimg,220, 200, 200)
+        #print Max
+        print Max
+
+if __name__ == '__main__':
+    print "Waiting for user to be ready"
+    time.sleep(3)
+    print "Starting now"
+    test=get_laser_pos()
     print test
+
+    #print cont_get_laser_pos()
