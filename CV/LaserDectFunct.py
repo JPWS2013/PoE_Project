@@ -58,24 +58,24 @@ def FindLaser(image, RedThreshold,GreenThreshold, BlueThreshold):
     #Return the (x,y) tuple containing the average of all the confirmed red points
     return AvgMax
 
-def get_laser_pos():
+def get_laser_pos(cap):
     start=time.time()
 
     res=[]
     xvalues=[]
     yvalues=[]
 
-    cap = cv2.VideoCapture(1)
-    #set the width and height, and UNSUCCESSFULLY set the exposure time
-    cap.set(3,640)
-    cap.set(4,320)
-    cap.set(10, 0.4)
-    cap.set(12, 3)
+    # cap = cv2.VideoCapture(1)
+    # #set the width and height, and UNSUCCESSFULLY set the exposure time
+    # cap.set(3,640)
+    # cap.set(4,320)
+    # cap.set(10, 0.4)
+    # cap.set(12, 3)
 
     #cam=Camera(1)
-    print "init time= ", time.time()-start
+    #print "init time= ", time.time()-start
     #Timer=time.clock()
-    while len(res)!=2:
+    while len(res)!=3:
         time1=time.time()
 
         # img=cam.getImage()
@@ -83,17 +83,17 @@ def get_laser_pos():
         # cv2.imshow("input", img)
         #cv2.imshow("thresholded", imgray*thresh2)
 
-        time2=time.time()
-        elapsed1=time2-time1
-        print "elapsed1= ", elapsed1
+        # time2=time.time()
+        # elapsed1=time2-time1
+        # print "elapsed1= ", elapsed1
 
         #key = cv2.waitKey(5)
 
         simplecvimg=Image(img, cv2image=True)
 
-        time3=time.time()
-        elapsed2=time3-time2
-        print "elapsed2= ", elapsed2
+        # time3=time.time()
+        # elapsed2=time3-time2
+        # print "elapsed2= ", elapsed2
 
         #image=simplecvimg.crop(320-150, 160-75, 300, 150)
 
