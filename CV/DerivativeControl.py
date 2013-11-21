@@ -149,8 +149,8 @@ def BinaryCombine(spRight, spLeft, drRight, drLeft):
 def BinaryDrive(PL):
     """Function which calls binary control functions"""
     #RETURNS TUPLE (RIGHTWHEELSPEED,LEFTWHEELSPEED)
-    SpeedPoints = BinarySpeed(PL[0], PL[1])
-    DrivePoints = BinaryDrive(PL[2], PL[3])
+    SpeedPoints = BinarySteering(PL[0], PL[1])
+    DrivePoints = BinarySpeed(PL[2], PL[3])
     FinalControl = BinaryCombine(SpeedPoints, DrivePoints)
     return FinalControl
 
