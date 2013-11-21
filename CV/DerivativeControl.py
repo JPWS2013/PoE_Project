@@ -111,13 +111,13 @@ def BinarySteering(x1, x2):
     #RETURNS A LIST WITH THE RIGHTSPEED and LEFTSPEED for the appropriate turn
     if x1 > x2:
         print "I'm turning Left"
-        LeftSp = 240
-        RightSp = 50
+        LeftSp = 50
+        RightSp = 240
 
     if x1 < x2:
         print "I'm turning Right"
-        LeftSp = 50
-        RightSp = 240
+        LeftSp = 240
+        RightSp = 50
 
     return [RightSp, LeftSp]
 
@@ -160,7 +160,7 @@ def ProportionalSteering(x1, x2):
     # RETURNS WHEELPROP: LEFTWHEEL = RIGHTWHEEL * WHEELPROP
     # 0 <= WHEELPROP
     xdiff = x2 - x1
-    WheelProp = interp(abs(xdiff), [0, ImageWidth], [0, 1])
+    WheelProp = interp(abs(xdiff), [0, ImageWidth], [1, 0])
     # WheelProp tells you that the speed of one wheel will be
     # WheelProp*OtherWheelSpeed. To figue out which wheel, go on.
     if xdiff > 0:
