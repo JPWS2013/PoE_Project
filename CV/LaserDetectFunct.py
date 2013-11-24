@@ -1,4 +1,13 @@
 # LaserDectFunct.py
+
+"""
+
+Provides function definitions for laser detection
+
+Module written as part of Principles of Engineering, Fall 2013 at Olin College of Engineering
+
+"""
+
 from SimpleCV import *
 import cv2
 import time
@@ -8,7 +17,13 @@ def FindLaser(image, RedThreshold,GreenThreshold, BlueThreshold):
     from numpy import mean
 
     #Split into RGB channels. red, green, & blue are image classes 
-    (red, green, blue)=image.splitChannels(False) 
+    try:
+
+        (red, green, blue)=image.splitChannels(False) 
+
+    except:
+        errormessage='No camera image detected; Please check to ensure that you have selected the right camera'
+        return (None, errormessage)
     
     #Get matrices for each color channel. EX:  gmat[50][70] returns a three-member 'vector' in the form [R,G,B], where R, G, & B are 0-255 color values
     gmat=green.getNumpy()
@@ -76,7 +91,7 @@ def get_laser_pos(cap):
     #print "init time= ", time.time()-start
     #Timer=time.clock()
     while len(res)!=3:
-        time1=time.time()
+        #time1=time.time()
 
         # img=cam.getImage()
         ret, img = cap.read()
@@ -102,6 +117,9 @@ def get_laser_pos(cap):
         # print "elapsed1= ", elapsed1
         
         Max=FindLaser(simplecvimg,220, 200, 200)
+
+        if Max[0]==None:
+            return Max 
         #print Max
 
         # time3=time.time()
@@ -129,22 +147,12 @@ def get_laser_pos(cap):
 
     return aver_point
 
-def cont_get_laser_pos():
+def cont_get_laser_pos(cap):
 
     res=[]
     xvalues=[]
     yvalues=[]
 
-    cap = cv2.VideoCapture(1)
-    #set the width and height, and UNSUCCESSFULLY set the exposure time
-    cap.set(3,640)
-    cap.set(4,320)
-    cap.set(10, 0.4)
-    cap.set(12, 3)
-
-    #cam=Camera(1)
-
-    #Timer=time.clock()
     while True:
         # img=cam.getImage()
         ret, img = cap.read()

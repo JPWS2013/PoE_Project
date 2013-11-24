@@ -1,4 +1,14 @@
-import LaserDectFunct as ldf
+#DriveAlgorithmFunct.py
+
+"""
+
+Provides function definitions for making driving decisions on the autonomous domino-laying robot
+
+Module written for Principles of Engineering, Fall 2013 at Olin College of Engineering
+
+"""
+
+import LaserDetectFunct as ldf
 from SimpleCV import *
 import cv2
 import time
@@ -63,49 +73,15 @@ def CloseSerial():  # Stop drive motors & close Pi<-->Arduino serial link
     print 'Serial Link Closed'
 
 
-InitializeSerial('COM5')
+def Initialize_Camera(c=0):
+    #InitializeSerial('COM5')
 
 
-cap = cv2.VideoCapture(1)
-# set the width and height, and UNSUCCESSFULLY set the exposure time
-cap.set(3, 640)
-cap.set(4, 320)
-cap.set(10, 0.4)
-cap.set(12, 3)
+    cap = cv2.VideoCapture(c)
+    # set the width and height, and set the exposure time
+    cap.set(3, 640)
+    cap.set(4, 320)
+    cap.set(10, 0.4)
+    cap.set(12, 3)
 
-
-# point1=ldf.get_laser_pos(cap)
-while True:
-    start = time.time()
-
-    point1 = ldf.get_laser_pos(cap)
-    point2 = ldf.get_laser_pos(cap)
-
-    xval1, yval1 = point1
-
-    xval2, yval2 = point2
-
-    elapsed = time.time() - start
-    print elapsed
-
-    if xval1 > xval2:
-        print "I'm turning Left"
-        LeftSp = 240
-        RightSp = 50
-
-    if xval1 < xval2:
-        print "I'm turning Right"
-        LeftSp = 50
-        RightSp = 240
-
-    if yval1 < yval2:
-        print "I'm slowing down"
-        LeftSp = 100
-        RightSp = 100
-
-    if yval1 > yval2:
-        print "I'm speeding up"
-        LeftSp = 255
-        RightSp = 255
-
-    Pi2Ard(LeftSp, RightSP, 2, 2)
+    return cap
