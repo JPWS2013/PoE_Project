@@ -85,3 +85,45 @@ def Initialize_Camera(c=0):
     cap.set(12, 3)
 
     return cap
+
+# def drive_decision(cap):
+#     point1 = ldf.get_laser_pos(cap)
+
+#     if point1[0]==None:
+#         print point1[1]
+#         break
+
+#     xval1, yval1 = point1
+
+#     # elapsed = time.time() - start
+#     # print elapsed
+#     LeftSp=127
+#     LeftSp=127
+    
+#     if xval1 <320:
+#         print "I'm turning Left"
+#         LeftSp = 240
+#         RightSp = 50
+
+#     elif xval1 >320:
+#         print "I'm turning Right"
+#         LeftSp = 50
+#         RightSp = 240
+
+#     elif xval1==320:
+#         print"I'm going straight"
+
+#     if xval == 320:
+#         print "I'm not turning"
+
+#     if yval1 < 160:
+#         print "I'm slowing down"
+#         LeftSp = 100
+#         RightSp = 100
+
+#     if yval1 > 160:
+#         print "I'm speeding up"
+#         LeftSp = 255
+#         RightSp = 255
+
+#     return (LeftSp, RightSp)
