@@ -7,7 +7,8 @@ import serial
 import binarydrive as drive
 
 
-cap=daf.Initialize_Camera()
+# cap=daf.Initialize_CVCamera(1)
+cap=daf.Initialize_simpleCamera(1)
 # point1=ldf.get_laser_pos(cap)
 while True:
     # start = time.time()
@@ -46,6 +47,6 @@ while True:
     #     LeftSp = 255
     #     RightSp = 255
 
-    res=drive_decision(cap)
+    res=drive.drive_decision(cap)
 
-    daf.Pi2Ard(res[0], res[1], 2, 2)
+    #daf.Pi2Ard(res[0], res[1], 2, 2)

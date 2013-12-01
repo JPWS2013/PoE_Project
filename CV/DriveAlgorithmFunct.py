@@ -73,17 +73,22 @@ def CloseSerial():  # Stop drive motors & close Pi<-->Arduino serial link
     print 'Serial Link Closed'
 
 
-def Initialize_Camera(c=0):
+def Initialize_CVCamera(c=0):
     #InitializeSerial('COM5')
 
 
     cap = cv2.VideoCapture(c)
     # set the width and height, and set the exposure time
-    cap.set(3, 640)
-    cap.set(4, 320)
-    cap.set(10, 0.4)
-    cap.set(12, 3)
+    cap.set(3, 640) #Width
+    cap.set(4, 320) #Height
+    cap.set(10, 0.4) #Brightness
+    cap.set(12, 3) #Saturation
+    #cap.set(15, 0.2) #Exposure
 
+    return cap
+
+def Initialize_simpleCamera(c=0):
+    cap=Camera(c)
     return cap
 
 # def drive_decision(cap):

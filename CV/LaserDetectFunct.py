@@ -93,8 +93,8 @@ def get_laser_pos(cap):
     while len(res)!=3:
         #time1=time.time()
 
-        # img=cam.getImage()
-        ret, img = cap.read()
+        simplecvimg=cap.getImage()
+        
         # cv2.imshow("input", img)
         #cv2.imshow("thresholded", imgray*thresh2)
 
@@ -104,12 +104,13 @@ def get_laser_pos(cap):
 
         #key = cv2.waitKey(5)
 
-        simplecvimg=Image(img, cv2image=True)
+        # ret, img = cap.read()
+        # simplecvimg=Image(img, cv2image=True)
 
         # time3=time.time()
         # elapsed2=time3-time2
         # print "elapsed2= ", elapsed2
-
+        simplecvimg.show()
         #image=simplecvimg.crop(320-150, 160-75, 300, 150)
 
         # time2=time.time()
