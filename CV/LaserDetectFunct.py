@@ -15,7 +15,7 @@ import time
 def FindLaser(image, RedThreshold,GreenThreshold, BlueThreshold):
     """Returns the (x,y) tuple which corresponds to the average of all the red ([255, 0, 0]) points in the image"""
     from numpy import mean
-
+    start=time.time()
     #Split into RGB channels. red, green, & blue are image classes 
     try:
 
@@ -25,16 +25,33 @@ def FindLaser(image, RedThreshold,GreenThreshold, BlueThreshold):
         errormessage='No camera image detected; Please check to ensure that you have selected the right camera'
         return (None, errormessage)
     
+    time1=time.time()
+    elapsed1=time1-start
+    print "pt1 = ", elapsed1
+
     #Get matrices for each color channel. EX:  gmat[50][70] returns a three-member 'vector' in the form [R,G,B], where R, G, & B are 0-255 color values
     gmat=green.getNumpy()
     bmat=blue.getNumpy()
     rmat=red.getNumpy() #Not used
 
+    time2=time.time()
+    elapsed2=time2-time1
+    print "pt2 = ", elapsed2
+
     #pts is a list of (x,y) tuples which correspond to points where the red channel is at a maximum. mx gives this maximum value. We do not use it.
     mx,pts=red.maxValue(locations=True)
 
+
+    time3=time.time()
+    elapsed3=time3-time2
+    print "pt3 = ", elapsed3
+
     #Splits pts tuples into two lists, one of x-red max value points, and one of y-red max value points
     rmvpx,rmvpy=zip(*pts)
+
+    time4=time.time()
+    elapsed4=time4-time3
+    print "pt4 = ", elapsed4
 
     #Declares/clears two lists
     redx=[]
@@ -51,6 +68,10 @@ def FindLaser(image, RedThreshold,GreenThreshold, BlueThreshold):
             redx.append(rmvpx[n])
             redy.append(rmvpy[n])
 
+    time5=time.time()
+    elapsed5=time5-time4
+    print "pt5 = ", elapsed5
+
     #Combine the redx and redy coordinates into a list of (x,y) tuples
     redPTS=zip(redx,redy)
 
@@ -61,9 +82,19 @@ def FindLaser(image, RedThreshold,GreenThreshold, BlueThreshold):
         AvgX=0
         AvgY=0
     
+    time6=time.time()
+    elapsed6=time6-time5
+    print "pt6 = ", elapsed6
 
     #Converts the calculated average coordinates to integers (because decimal pixels don't make sense) and saves them as an (x,y) tuple
     AvgMax=(int(AvgX), int(AvgY))
+
+    time7=time.time()
+    elapsed7=time7-time6
+    print "pt7 = ", elapsed7
+
+    total=elapsed1+elapsed2+elapsed3+elapsed4+elapsed5+elapsed6+elapsed7
+    print "total = ", total
 
     #Draws all the confirmed red pixels with blue dots. Draws the average of all these points with a larger black point. Displays the original image with the points overlayed. (can be eliminated for RPi running)
     # image.drawPoints(redPTS, color=Color.BLUE, sz=1, width=-1)
