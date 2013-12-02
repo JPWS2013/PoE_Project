@@ -8,7 +8,7 @@ import binarydrive as drive
 
 
 # cap=daf.Initialize_CVCamera(1)
-cap=daf.Initialize_simpleCamera(1)
+cap=daf.Initialize_simpleCamera()
 # point1=ldf.get_laser_pos(cap)
 while True:
     # start = time.time()

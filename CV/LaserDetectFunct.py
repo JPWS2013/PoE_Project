@@ -19,7 +19,7 @@ def FindLaser(image, RedThreshold,GreenThreshold, BlueThreshold):
     #Split into RGB channels. red, green, & blue are image classes 
     try:
 
-        (red, green, blue)=image.splitChannels(False) 
+        (red, green, blue)=image.splitChannels(False)
 
     except:
         errormessage='No camera image detected; Please check to ensure that you have selected the right camera'
@@ -31,7 +31,7 @@ def FindLaser(image, RedThreshold,GreenThreshold, BlueThreshold):
     rmat=red.getNumpy() #Not used
 
     #pts is a list of (x,y) tuples which correspond to points where the red channel is at a maximum. mx gives this maximum value. We do not use it.
-    mx,pts=red.maxValue(True)
+    mx,pts=red.maxValue(locations=True)
 
     #Splits pts tuples into two lists, one of x-red max value points, and one of y-red max value points
     rmvpx,rmvpy=zip(*pts)
@@ -94,6 +94,8 @@ def get_laser_pos(cap):
         #time1=time.time()
 
         simplecvimg=cap.getImage()
+
+        #print type(simplecvimg)
         
         # cv2.imshow("input", img)
         #cv2.imshow("thresholded", imgray*thresh2)
@@ -110,12 +112,13 @@ def get_laser_pos(cap):
         # time3=time.time()
         # elapsed2=time3-time2
         # print "elapsed2= ", elapsed2
-        simplecvimg.show()
+        # simplecvimg.show()
         #image=simplecvimg.crop(320-150, 160-75, 300, 150)
 
         # time2=time.time()
         # elapsed1=time2-time1
         # print "elapsed1= ", elapsed1
+
         
         Max=FindLaser(simplecvimg,220, 200, 200)
 

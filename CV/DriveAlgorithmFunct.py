@@ -88,7 +88,7 @@ def Initialize_CVCamera(c=0):
     return cap
 
 def Initialize_simpleCamera(c=0):
-    cap=Camera(c)
+    cap=Camera()
     return cap
 
 # def drive_decision(cap):
