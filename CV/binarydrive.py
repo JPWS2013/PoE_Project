@@ -14,12 +14,12 @@ def Steering(x1):
     LeftSp=127
     RightSp=127
 
-    if x1 < 160:
+    if x1 < 320:
         print "I'm turning Left"
         LeftSp = 50
         RightSp = 240
 
-    if x1 > 160:
+    if x1 > 320:
         print "I'm turning Right"
         LeftSp = 240
         RightSp = 50
@@ -35,12 +35,12 @@ def Speed(yval1):
     RightSp=127
 
 
-    if yval1 > 160:
+    if yval1 > 180:
         print "I'm slowing down"
         LeftSp = 100
         RightSp = 100
 
-    if yval1 < 160:
+    if yval1 < 180:
         print "I'm speeding up"
         LeftSp = 255
         RightSp = 255
