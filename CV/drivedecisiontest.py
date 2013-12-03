@@ -4,11 +4,16 @@ from SimpleCV import *
 import cv2
 import time
 import serial
-import binarydrive as drive
+import proportionaldrive as drive
 
 
 # cap=daf.Initialize_CVCamera(1)
 cap=daf.Initialize_simpleCamera()
+
+comport='/dev/ttyACM0'
+
+daf.InitializeSerial(comport)
+
 # point1=ldf.get_laser_pos(cap)
 while True:
     # start = time.time()
@@ -49,4 +54,8 @@ while True:
 
     res=drive.drive_decision(cap)
 
-    #daf.Pi2Ard(res[0], res[1], 2, 2)
+    print res
+
+    daf.Pi2Ard(res[0], res[1], 2, 2)
+
+daf.CloseSerial()

@@ -59,7 +59,7 @@ def Pi2Ard(rs, ls, ld, rd):  # Pi to Arduino serial communications
     LeftSpeed = leftspeed.zfill(3)
 
     Transmission = RightSpeed + LeftSpeed + RightDirection + LeftDirection + chr(003)
-
+    
     slink.write(Transmission)  # Write the new message to the serial port
     # Print confirmation of sent message
     print "Transmission : " + Transmission

@@ -15,7 +15,8 @@ import time
 def FindLaser(image, RedThreshold,GreenThreshold, BlueThreshold):
     """Returns the (x,y) tuple which corresponds to the average of all the red ([255, 0, 0]) points in the image"""
     from numpy import mean
-
+    #start=time.time()
+    
     #Split into RGB channels. red, green, & blue are image classes 
     try:
 
@@ -26,12 +27,25 @@ def FindLaser(image, RedThreshold,GreenThreshold, BlueThreshold):
         return (None, errormessage)
     
     #Get matrices for each color channel. EX:  gmat[50][70] returns a three-member 'vector' in the form [R,G,B], where R, G, & B are 0-255 color values
+    #time1=time.time()
+    
     gmat=green.getNumpy()
     bmat=blue.getNumpy()
     rmat=red.getNumpy() #Not used
 
+    sliced_red=rmat[:,:,0]
+
+    maxVal=np.max(sliced_red)
+
+    x,y=np.where(sliced_red==maxVal)
+
+    pts=zip(x.tolist(), y.tolist())
+
+    #time2=time.time()
+    #elapsed2=time2-time1
+    #print "pt2 = ", elapsed2
     #pts is a list of (x,y) tuples which correspond to points where the red channel is at a maximum. mx gives this maximum value. We do not use it.
-    mx,pts=red.simple_maxValue(locations=True)
+    # mx,pts=rmat.simple_maxValue(locations=True)
 
     #Splits pts tuples into two lists, one of x-red max value points, and one of y-red max value points
     rmvpx,rmvpy=zip(*pts)
@@ -90,7 +104,7 @@ def get_laser_pos(cap):
     #cam=Camera(1)
     #print "init time= ", time.time()-start
     #Timer=time.clock()
-    while len(res)!=3:
+    while len(res)!=2:
         #time1=time.time()
 
         simplecvimg=cap.getImage()

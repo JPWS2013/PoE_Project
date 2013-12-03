@@ -6,8 +6,12 @@ def Steering(x1):
     """Determines the ratio of speeds between the two wheels"""
     # RETURNS WHEELPROP: LEFTWHEEL = RIGHTWHEEL * WHEELPROP
     # 0 <= WHEELPROP
+
+    print "x1=", x1
+    
     xdiff = x1 - 320
-    WheelProp = interp(abs(xdiff), [0, 640], [1, 0])
+    
+    WheelProp = interp(abs(xdiff), [0, 320], [1, 0])
     # WheelProp tells you that the speed of one wheel will be
     # WheelProp*OtherWheelSpeed. To figue out which wheel, go on.
     if xdiff > 0:
@@ -24,7 +28,9 @@ def Steering(x1):
 
 
 def Speed(y1, steering):
-    ydiff = y1 - 160
+    print "y1=", y1
+    
+    ydiff = y1 - 180
 
     # We select a minimum speed such that if you drive one motor at this
     # speed, the other can be driven at any speed (greater than this, of
@@ -33,7 +39,9 @@ def Speed(y1, steering):
 
     # CruiseSpeed = ((255-MinWheelSpeed)/2)+MinWheelSpeed
 
-    AvgSpeed = interp(ydiff, [-320, 320], [MinWheelSpeed, 255])
+    AvgSpeed = interp(y1, [0, 480], [255, MinWheelSpeed])
+
+    print 'AvgSpeed=', AvgSpeed
 
     RightWheel = (2 * AvgSpeed) / (1 + steering)
     LeftWheel = steering * RightWheel
