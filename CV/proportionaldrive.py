@@ -92,6 +92,9 @@ def SpeedChecker(UncheckedSpeeds):
         print "Left Wheel Speed too great. Decreasing"
     else:
         CheckedLeft = UncheckedSpeeds[1]
+        
+    CheckedLeft=int(CheckedLeft)
+    CheckedRight=int(CheckedRight)
 
     return (CheckedRight, CheckedLeft)
 
