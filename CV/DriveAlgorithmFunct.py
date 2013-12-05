@@ -51,15 +51,15 @@ def InitializeSerial(sp):
 def Pi2Ard(rs, ls, ld, rd):  # Pi to Arduino serial communications
     rightspeed = str(rs)
     leftspeed = str(ls)
-    LeftDirection = str(ld)
-    RightDirection = str(rd)
+    LeftDirec = str(ld)
+    RightDirec = str(rd)
 
     # Fills in leading zeros so speed is always 3 digits
-    RightSpeed = rightspeed.zfill(3)
-    LeftSpeed = leftspeed.zfill(3)
+    RightSp = rightspeed.zfill(3)
+    LeftSp = leftspeed.zfill(3)
 
-    Transmission = RightSpeed + LeftSpeed + RightDirection + LeftDirection + chr(003)
-    
+    Transmission = RightSp + LeftSp + RightDirec + LeftDirec + chr(003)
+
     slink.write(Transmission)  # Write the new message to the serial port
     # Print confirmation of sent message
     print "Transmission : " + Transmission
@@ -76,19 +76,19 @@ def CloseSerial():  # Stop drive motors & close Pi<-->Arduino serial link
 def Initialize_CVCamera(c=0):
     #InitializeSerial('COM5')
 
-
     cap = cv2.VideoCapture(c)
     # set the width and height, and set the exposure time
-    cap.set(3, 640) #Width
-    cap.set(4, 320) #Height
-    cap.set(10, 0.4) #Brightness
-    cap.set(12, 3) #Saturation
+    cap.set(3, 640)  # Width
+    cap.set(4, 320)  # Height
+    cap.set(10, 0.4)  # Brightness
+    cap.set(12, 3)  # Saturation
     #cap.set(15, 0.2) #Exposure
 
     return cap
 
+
 def Initialize_simpleCamera(c=0):
-    cap=Camera()
+    cap = Camera()
     return cap
 
 # def drive_decision(cap):

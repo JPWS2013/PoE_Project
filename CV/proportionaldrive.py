@@ -2,15 +2,16 @@ import LaserDetectFunct as ldf
 import DriveAlgorithmFunct as daf
 from numpy import interp
 
+
 def Steering(x1):
     """Determines the ratio of speeds between the two wheels"""
     # RETURNS WHEELPROP: LEFTWHEEL = RIGHTWHEEL * WHEELPROP
     # 0 <= WHEELPROP
 
     print "x1=", x1
-    
+
     xdiff = x1 - 320
-    
+
     WheelProp = interp(abs(xdiff), [0, 320], [1, 0])
     # WheelProp tells you that the speed of one wheel will be
     # WheelProp*OtherWheelSpeed. To figue out which wheel, go on.
@@ -29,8 +30,6 @@ def Steering(x1):
 
 def Speed(y1, steering):
     print "y1=", y1
-    
-    ydiff = y1 - 180
 
     # We select a minimum speed such that if you drive one motor at this
     # speed, the other can be driven at any speed (greater than this, of
@@ -80,6 +79,7 @@ def Drive(PL):
     FinalControl = Speed(PL[1], SteeringProportion)
     return FinalControl
 
+
 def SpeedChecker(UncheckedSpeeds):
     if UncheckedSpeeds[0] > 255:
         CheckedRight = 255
@@ -92,11 +92,12 @@ def SpeedChecker(UncheckedSpeeds):
         print "Left Wheel Speed too great. Decreasing"
     else:
         CheckedLeft = UncheckedSpeeds[1]
-        
-    CheckedLeft=int(CheckedLeft)
-    CheckedRight=int(CheckedRight)
+
+    CheckedLeft = int(CheckedLeft)
+    CheckedRight = int(CheckedRight)
 
     return (CheckedRight, CheckedLeft)
+
 
 def drive_decision(cap):
     point1 = ldf.get_laser_pos(cap)
@@ -104,7 +105,7 @@ def drive_decision(cap):
 
     xval1, yval1 = point1
     if xval1 == -1:
-        return (0, 0) #if error condition is received, stop the bot
+        return (0, 0)  # if error condition is received, stop the bot
 
     # xval2, yval2 = point2
 
@@ -123,12 +124,12 @@ def drive_decision(cap):
 
 
 if __name__ == '__main__':
-    cap=daf.Initialize_Camera()
+    cap = daf.Initialize_Camera()
 
     while True:
         # start = time.time()
 
-        res=drive_decision(cap)
+        res = drive_decision(cap)
 
         print res
 

@@ -8,9 +8,9 @@ import proportionaldrive as drive
 
 
 # cap=daf.Initialize_CVCamera(1)
-cap=daf.Initialize_simpleCamera()
+cap = daf.Initialize_simpleCamera()
 
-comport='/dev/ttyACM0'
+comport = '/dev/ttyACM0'
 
 daf.InitializeSerial(comport)
 
@@ -52,7 +52,7 @@ while True:
     #     LeftSp = 255
     #     RightSp = 255
 
-    res=drive.drive_decision(cap)
+    res = drive.drive_decision(cap)
 
     print res
 
