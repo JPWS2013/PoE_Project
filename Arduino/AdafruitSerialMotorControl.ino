@@ -8,6 +8,8 @@
 char Incoming = 0; 	//Used to store the incoming character from the serial port
 String IncDat;	//Used to store the incoming data from the serial port as a string 
 
+byte SignalPin = 4; //Pin to connect to indicator LED or buzzer
+
 byte LeftDirection;
 byte RightDirection;
 
@@ -34,6 +36,7 @@ Adafruit_DCMotor *DISPENSE = AFMS.getMotor(3); 	//Domino Motor
 void setup() 
 {	 
 	AFMS.begin();	//Start motor shield
+	pinMode(SignalPin, OUTPUT);
 	Serial.begin(9600);	 //Open serial port
 
 	IncDat.reserve(200); //Reserve 200 bytes for the incoming serial data
@@ -53,6 +56,7 @@ void setup()
 
 	Serial.println("1500"); //Indicates to python that the Arduino is ready
 							//Windows Only?
+
 	DISPENSE->setSpeed(100);
 	DISPENSE->run(FORWARD);
 }

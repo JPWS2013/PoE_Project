@@ -93,6 +93,7 @@ def get_laser_pos(cap):
     res=[]
     xvalues=[]
     yvalues=[]
+    LaserErrors = 0
 
     # cap = cv2.VideoCapture(1)
     # #set the width and height, and UNSUCCESSFULLY set the exposure time
@@ -148,6 +149,13 @@ def get_laser_pos(cap):
 
         if x_value != 0 and y_value != 0:
             res.append(Max)
+        else:
+            LaserErrors += 1 #Count the number of images w/ no found laser
+
+        if LaserErrors == 3  # Number of unfound laser images before bot stop
+            res = [(-1,-1), (-1,-1)] #Pass out error condition
+            LaserErrors == 0 #Reset error counter
+
 
     #print res
 
