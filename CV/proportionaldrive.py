@@ -103,6 +103,8 @@ def drive_decision(cap):
     #point2 = ldf.get_laser_pos(cap)
 
     xval1, yval1 = point1
+    if xval1 == -1:
+        return (0, 0) #if error condition is received, stop the bot
 
     # xval2, yval2 = point2
 
