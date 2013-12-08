@@ -12,11 +12,13 @@ byte SignalPin = 4; //Pin to connect to indicator LED or buzzer
 
 byte LeftDirection;
 byte RightDirection;
+byte DispenserDirection;
 
 long RightSpeed = 0;
 long LeftSpeed = 0;
 long leftdir = 0;
 long righdir = 0;
+long DispenserSpeed = 0;
 
 String RSpeed =String("");
 String LSpeed;
@@ -94,19 +96,19 @@ void loop()
 	LeftDirection=leftdir;
 	RightDirection=righdir;
 	
-	RunMotors(RightSpeed,LeftSpeed,RightDirection,LeftDirection);
+	DispenserSpeed = map(min(RightSpeed, LeftSpeed), 0, 255, 0, 255); //Change the last two numbers to tune the dispenser motor speed
+	DispenserDirection = 1; //Should always be either one or two, depending on motor mount orientation.
+	RunMotors(RightSpeed, LeftSpeed, DispenserSpeed, RightDirection, LeftDirection, DispenserDirection);
 }
 
 
 
-void RunMotors(int rs, int ls, byte rd, byte ld) //Run two drive motors
+void RunMotors(int rs, int ls, int ds, byte rd, byte ld, byte dd) //Run two drive motors
 {
 	LEFT->setSpeed(rs);
 	LEFT->run(rd);
 	RIGHT->setSpeed(ls);
 	RIGHT->run(ld);
+        DISPENSE->setSpeed(ds);
+        DISPENSE->run(dd);
 }
-//Look into serialEvent
-//Would it make more sense to have serial checking in the void_loop 
-//or would it make more sense to have it occur at the end of the void loop
-//if serial data is detected? Will there be a difference?
