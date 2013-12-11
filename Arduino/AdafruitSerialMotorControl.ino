@@ -58,9 +58,6 @@ void setup()
 
 	Serial.println("1500"); //Indicates to python that the Arduino is ready
 							//Windows Only?
-
-	DISPENSE->setSpeed(100);
-	DISPENSE->run(FORWARD);
 }
 
 void loop() 
