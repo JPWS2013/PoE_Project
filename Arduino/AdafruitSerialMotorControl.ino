@@ -109,6 +109,6 @@ void RunMotors(int rs, int ls, int ds, byte rd, byte ld, byte dd) //Run two driv
 	LEFT->run(rd);
 	RIGHT->setSpeed(ls);
 	RIGHT->run(ld);
-        DISPENSE->setSpeed(ds);
-        DISPENSE->run(dd);
+    DISPENSE->setSpeed(ds);
+    DISPENSE->run(dd);
 }
