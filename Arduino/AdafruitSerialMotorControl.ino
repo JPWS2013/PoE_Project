@@ -8,7 +8,7 @@
 char Incoming = 0; 	//Used to store the incoming character from the serial port
 String IncDat;	//Used to store the incoming data from the serial port as a string 
 
-byte SignalPin = 4; //Pin to connect to indicator LED or buzzer
+byte SignalPin = 11; //Pin to connect to indicator LED or buzzer
 
 byte LeftDirection;
 byte RightDirection;
@@ -58,6 +58,7 @@ void setup()
 
 	Serial.println("1500"); //Indicates to python that the Arduino is ready
 							//Windows Only?
+	tone(SignalPin, 1800, 1500); //Beep for 1.5 seconds (high pitch)
 }
 
 void loop() 
@@ -106,6 +107,15 @@ void RunMotors(int rs, int ls, int ds, byte rd, byte ld, byte dd) //Run two driv
 	LEFT->run(rd);
 	RIGHT->setSpeed(ls);
 	RIGHT->run(ld);
-    DISPENSE->setSpeed(ds);
-    DISPENSE->run(dd);
+	DISPENSE->setSpeed(ds);
+	DISPENSE->run(dd);
+
+    if(rs == 0 && ls == 0)
+    {
+    	tone(SignalPin, 740); //During running, if motors are told not to move, that means that it has lost the laser.Play a low tone.
+    }
+    else
+    {
+    	noTone(SignalPin); //As soon as the motors move, do not play the warning low tone.
+    }
 }
