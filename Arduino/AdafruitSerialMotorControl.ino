@@ -8,7 +8,10 @@
 char Incoming = 0; 	//Used to store the incoming character from the serial port
 String IncDat;	//Used to store the incoming data from the serial port as a string 
 
+byte DominoCount = 0; //Counts number of dominoes dispensed
+
 byte SignalPin = 11; //Pin to connect to indicator LED or buzzer
+byte BreakBeamPin = 8; //Pin to connect to breakbeam data pin.
 
 byte LeftDirection;
 byte RightDirection;
@@ -63,40 +66,51 @@ void setup()
 
 void loop() 
 {
-	if (Serial.available())
-	{
-		while (Serial.available())
+	while (DominoCount == 28)
+		BreakBState = digitalRead(BreakBeamPin);
+		if (BreakBState == HIGH)
 		{
-			Incoming=Serial.read();
-
-			if (Incoming==char(003))
+			while (BreakBState == HIGH)
 			{
-				RSpeed=IncDat.substring(0,3);
-				LSpeed =IncDat.substring(3,6);
-				RDirection =IncDat.substring(6,7);
-				LDirection = IncDat.substring(7,8);
-				IncDat=""; //Clear IncDat for next serial transmission
+				BreakBState = digitalRead(BreakBeamPin); //Makes sure dominoes are not double counted
 			}
-			else
+
+			DominoCount += 1;
+		}
+		if (Serial.available())
+		{
+			while (Serial.available())
 			{
-				IncDat += Incoming; //Append most recent character to IncDat string
+				Incoming=Serial.read();
+
+				if (Incoming==char(003))
+				{
+					RSpeed=IncDat.substring(0,3);
+					LSpeed =IncDat.substring(3,6);
+					RDirection =IncDat.substring(6,7);
+					LDirection = IncDat.substring(7,8);
+					IncDat=""; //Clear IncDat for next serial transmission
+				}
+				else
+				{
+					IncDat += Incoming; //Append most recent character to IncDat string
+				}
 			}
 		}
-	}
-	//Convert separated string to long with string.toInt	
-	 RightSpeed=RSpeed.toInt();
-	 LeftSpeed= LSpeed.toInt();
-	 leftdir=LDirection.toInt();
-	 righdir=RDirection.toInt();
+		//Convert separated string to long with string.toInt	
+		 RightSpeed=RSpeed.toInt();
+		 LeftSpeed= LSpeed.toInt();
+		 leftdir=LDirection.toInt();
+		 righdir=RDirection.toInt();
 
-	//Convert leftdir and righdir (Left and Right directional info) to bytes. Req'd for adafruit library
+		//Convert leftdir and righdir (Left and Right directional info) to bytes. Req'd for adafruit library
 
-	LeftDirection=leftdir;
-	RightDirection=righdir;
-	
-	DispenserSpeed = map(min(RightSpeed, LeftSpeed), 0, 255, 0, 255); //Change the last two numbers to tune the dispenser motor speed
-	DispenserDirection = 1; //Should always be either one or two, depending on motor mount orientation.
-	RunMotors(RightSpeed, LeftSpeed, DispenserSpeed, RightDirection, LeftDirection, DispenserDirection);
+		LeftDirection=leftdir;
+		RightDirection=righdir;
+		
+		DispenserSpeed = map(min(RightSpeed, LeftSpeed), 0, 255, 0, 255); //Change the last two numbers to tune the dispenser motor speed
+		DispenserDirection = 1; //Should always be either one or two, depending on motor mount orientation.
+		RunMotors(RightSpeed, LeftSpeed, DispenserSpeed, RightDirection, LeftDirection, DispenserDirection);
 }
 
 
