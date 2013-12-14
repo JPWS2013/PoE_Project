@@ -12,6 +12,7 @@ byte DominoCount = 0; //Counts number of dominoes dispensed
 
 byte SignalPin = 11; //Pin to connect to indicator LED or buzzer
 byte BreakBeamPin = 8; //Pin to connect to breakbeam data pin.
+byte BreakBState = 0; //Variable to store
 
 byte LeftDirection;
 byte RightDirection;
@@ -66,7 +67,8 @@ void setup()
 
 void loop() 
 {
-	while (DominoCount == 28)
+	while (DominoCount >40)
+	{
 		BreakBState = digitalRead(BreakBeamPin);
 		if (BreakBState == HIGH)
 		{
@@ -77,6 +79,7 @@ void loop()
 
 			DominoCount += 1;
 		}
+
 		if (Serial.available())
 		{
 			while (Serial.available())
@@ -97,6 +100,7 @@ void loop()
 				}
 			}
 		}
+
 		//Convert separated string to long with string.toInt	
 		 RightSpeed=RSpeed.toInt();
 		 LeftSpeed= LSpeed.toInt();
@@ -111,6 +115,8 @@ void loop()
 		DispenserSpeed = map(min(RightSpeed, LeftSpeed), 0, 255, 0, 255); //Change the last two numbers to tune the dispenser motor speed
 		DispenserDirection = 1; //Should always be either one or two, depending on motor mount orientation.
 		RunMotors(RightSpeed, LeftSpeed, DispenserSpeed, RightDirection, LeftDirection, DispenserDirection);
+	}
+		
 }
 
 
