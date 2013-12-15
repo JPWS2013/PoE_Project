@@ -1,4 +1,3 @@
-
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
 #include "utility/Adafruit_PWMServoDriver.h"
@@ -111,9 +110,17 @@ void loop()
 
 		LeftDirection=leftdir;
 		RightDirection=righdir;		
-
-		DispenserSpeed = map(min(RightSpeed, LeftSpeed), 0, 255, 0, 255); //Change the last two numbers to tune the dispenser motor speed
-		DispenserDirection = 1; //Should always be either one or two, depending on motor mount orientation.
+                
+                if (LeftSpeed==0 || RightSpeed==0)
+                {
+                  DispenserSpeed=0;
+                }
+                else
+                {
+                  DispenserSpeed = map(min(RightSpeed, LeftSpeed), 0, 255, 150, 255); //Change the last two numbers to tune the dispenser motor speed
+                }
+                
+                DispenserDirection = 1; //Should always be either one or two, depending on motor mount orientation.
 		RunMotors(RightSpeed, LeftSpeed, DispenserSpeed, RightDirection, LeftDirection, DispenserDirection);
 	}
 		
