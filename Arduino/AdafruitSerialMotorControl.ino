@@ -35,7 +35,7 @@ String LDirection;
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
 Adafruit_DCMotor *LEFT = AFMS.getMotor(1); 	//Left Drive
-Adafruit_DCMotor *RIGHT = AFMS.getMotor(4);	//Right Drive
+Adafruit_DCMotor *RIGHT = AFMS.getMotor(2);	//Right Drive
 Adafruit_DCMotor *DISPENSE = AFMS.getMotor(3); 	//Domino Motor
 
 
@@ -67,7 +67,7 @@ void setup()
 
 void loop() 
 {
-	while (DominoCount >40)
+	while (DominoCount <40)
 	{
 		BreakBState = digitalRead(BreakBeamPin);
 		if (BreakBState == HIGH)
@@ -110,8 +110,8 @@ void loop()
 		//Convert leftdir and righdir (Left and Right directional info) to bytes. Req'd for adafruit library
 
 		LeftDirection=leftdir;
-		RightDirection=righdir;
-		
+		RightDirection=righdir;		
+
 		DispenserSpeed = map(min(RightSpeed, LeftSpeed), 0, 255, 0, 255); //Change the last two numbers to tune the dispenser motor speed
 		DispenserDirection = 1; //Should always be either one or two, depending on motor mount orientation.
 		RunMotors(RightSpeed, LeftSpeed, DispenserSpeed, RightDirection, LeftDirection, DispenserDirection);
