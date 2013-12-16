@@ -117,7 +117,7 @@ void loop()
                 }
                 else
                 {
-                  DispenserSpeed = map(min(RightSpeed, LeftSpeed), 0, 255, 150, 255); //Change the last two numbers to tune the dispenser motor speed
+                  DispenserSpeed = map(min(RightSpeed, LeftSpeed), 0, 255, 190, 255); //Change the last two numbers to tune the dispenser motor speed
                 }
                 
                 DispenserDirection = 1; //Should always be either one or two, depending on motor mount orientation.
