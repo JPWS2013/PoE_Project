@@ -1,0 +1,14 @@
+sudo ifconfig eth0 10.0.0.75 netmask 255.255.255.0
+
+OR
+
+edit /etc/network/interfaces as per the INTERNETS
+
+address 10.0.0.1
+netmask 255.255.255.0
+
+sudo nano /etc/network/interfaces on the raspberry pi
+ -> 10.0.0.1 is currently hardcoded into the raspberry pi
+    every time it comes up
+
+run sudo ifconfig eth0 10.0.0.2 netmask 255.255.255.0 on laptop to set the ethernet port. Remove the other networking parts (wireless etc.)
