@@ -23,6 +23,8 @@ long leftdir = 0;
 long righdir = 0;
 long DispenserSpeed = 0;
 
+float dividingfactor=3.5;
+
 String RSpeed =String("");
 String LSpeed;
 String RDirection;
@@ -68,17 +70,7 @@ void loop()
 {
 	while (DominoCount <40)
 	{
-		BreakBState = digitalRead(BreakBeamPin);
-		if (BreakBState == HIGH)
-		{
-			while (BreakBState == HIGH)
-			{
-				BreakBState = digitalRead(BreakBeamPin); //Makes sure dominoes are not double counted
-			}
-
-			DominoCount += 1;
-		}
-
+		
 		if (Serial.available())
 		{
 			while (Serial.available())
@@ -99,10 +91,14 @@ void loop()
 				}
 			}
 		}
-
+                
 		//Convert separated string to long with string.toInt	
 		 RightSpeed=RSpeed.toInt();
+                 RightSpeed=RightSpeed/dividingfactor;
+                 RightSpeed=long(RightSpeed);
 		 LeftSpeed= LSpeed.toInt();
+                 LeftSpeed=LeftSpeed/dividingfactor;
+                 LeftSpeed=long(LeftSpeed);
 		 leftdir=LDirection.toInt();
 		 righdir=RDirection.toInt();
 
@@ -114,14 +110,33 @@ void loop()
                 if (LeftSpeed==0 || RightSpeed==0)
                 {
                   DispenserSpeed=0;
+                  RightSpeed=0;
                 }
                 else
                 {
-                  DispenserSpeed = map(min(RightSpeed, LeftSpeed), 0, 255, 190, 255); //Change the last two numbers to tune the dispenser motor speed
+                  DispenserSpeed = 125;//map(min(RightSpeed, LeftSpeed), 0, (255/dividingfactor), 100, 150); //Change the last two numbers to tune the dispenser motor speed
+                  RightSpeed = 49;
                 }
                 
+                //RightSpeed = 140;
+                LeftSpeed = RightSpeed;
                 DispenserDirection = 1; //Should always be either one or two, depending on motor mount orientation.
-		RunMotors(RightSpeed, LeftSpeed, DispenserSpeed, RightDirection, LeftDirection, DispenserDirection);
+		
+                BreakBState = digitalRead(BreakBeamPin);
+		if (BreakBState == HIGH)
+		{
+                        RunMotors(0, 0, 0, 0, 0, 0);
+                        
+                        delay(250);
+//			while (BreakBState == HIGH)
+//			{
+//				BreakBState = digitalRead(BreakBeamPin); //Makes sure dominoes are not double counted
+//			}
+
+			DominoCount += 1;
+		}
+
+                RunMotors(RightSpeed, LeftSpeed, DispenserSpeed, RightDirection, LeftDirection, DispenserDirection);
 	}
 		
 }
